@@ -12,7 +12,8 @@
       color: #333;
     }
     header {
-      background: url('logo.png') no-repeat center center/cover;
+      background: #003366 url('logo.png') no-repeat center center;
+      background-size: contain;
       padding: 100px 20px;
       text-align: center;
       color: white;
@@ -23,6 +24,25 @@
     }
     header p {
       font-size: 1.25rem;
+    }
+    .cta {
+      background: #e0f0ff;
+      border-left: 5px solid #003366;
+      margin: 40px auto;
+      padding: 20px;
+      max-width: 600px;
+      text-align: center;
+      border-radius: 8px;
+      animation: pulse 2.5s infinite;
+    }
+    .cta h3 {
+      margin-top: 0;
+      color: #003366;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 51, 102, 0.5); }
+      70% { transform: scale(1.03); box-shadow: 0 0 10px 10px rgba(0, 51, 102, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 51, 102, 0); }
     }
     .section {
       padding: 60px 20px;
@@ -70,7 +90,10 @@
   </style>
 </head>
 <body> <header>
-  </header> <section class="section">
+  </header> <div class="cta">
+    <h3>Need Help Studying?</h3>
+    <p>Click the chat icon at the bottom-right to ask Lexova a question.</p>
+  </div> <section class="section">
     <h2>Why Use Lexova?</h2>
     <div class="cards">
       <div class="card">
@@ -91,9 +114,38 @@
 
   </section> <footer>
     &copy; 2025 Lexova. All rights reserved.
-  </footer> <script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="CT4-r9vET8KnSxWtNJH36";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
-</script>
+  </footer> <!-- Welcome Message on Load --> <script>
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        alert('👋 Hi! I’m Lexova, your law study assistant. Click the chat icon in the bottom-right corner to start chatting!');
+      }, 1000);
+    });
+  </script> <!-- Chatbase Chatbot Script --> <script>
+  (function(){
+    if(!window.chatbase || window.chatbase("getState") !== "initialized"){
+      window.chatbase = (...args) => {
+        if(!window.chatbase.q){ window.chatbase.q = []; }
+        window.chatbase.q.push(args);
+      };
+      window.chatbase = new Proxy(window.chatbase, {
+        get(target, prop){
+          if(prop === "q"){ return target.q; }
+          return (...args) => target(prop, ...args);
+        }
+      });
+    }
+    const onLoad = function(){
+      const script = document.createElement("script");
+      script.src = "https://www.chatbase.co/embed.min.js";
+      script.id = "CT4-r9vET8KnSxWtNJH36";
+      script.domain = "www.chatbase.co";
+      document.body.appendChild(script);
+    };
+    if(document.readyState === "complete"){
+      onLoad();
+    } else {
+      window.addEventListener("load", onLoad);
+    }
+  })();
   </script></body>
-</html> 
-
+</html>
