@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -87,16 +88,34 @@
       header h1 { font-size: 2rem; }
       .cards { flex-direction: column; align-items: center; }
     }
+
+    /* Chatbot Styles */
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+    }
   </style>
 </head>
-<body> <header>
-  </header> <div class="cta">
+<body>
+  <header>
+    <h1>Lexova</h1>
+    <p>Your Law School AI Companion</p>
+  </header>
+
+  <div class="cta">
     <h3>Need Help Studying?</h3>
     <p>Click the chat icon at the bottom-right to ask Lexova a question.</p>
-  </div> <section class="section">
-  <div style="background-color: #fff3cd; color: #856404; padding: 1rem; text-align: center; font-weight: bold;">
-  👋 Lexova's chatbot is temporarily offline. We're upgrading to serve you better! Try again in a few days.
   </div>
+
+  <section class="section">
     <h2>Why Use Lexova?</h2>
     <div class="cards">
       <div class="card">
@@ -111,44 +130,23 @@
         <h3>Study Assistant</h3>
         <p>Get summaries, definitions, and help understanding concepts.</p>
       </div>
-    </div><div class="testimonial">
-  <p>“Lexova helped me study for my law exams — it's like having a tutor in my pocket!”<br>— Grace, 300L, UNILORIN</p>
-</div>
+    </div>
+    <div class="testimonial">
+      <p>“Lexova helped me study for my law exams — it's like having a tutor in my pocket!”<br>— Grace, 300L, UNILORIN</p>
+    </div>
+  </section>
 
-  </section> <footer>
+  <footer>
     &copy; 2025 Lexova. All rights reserved.
-  </footer> <!-- Welcome Message on Load --> <script>
-    window.addEventListener('load', function () {
-      setTimeout(function () {
-        alert('👋 Hi! I’m Lexova, your law study assistant. Click the chat icon in the bottom-right corner to start chatting!');
-      }, 1000);
-    });
-  </script> <!-- Chatbase Chatbot Script --> <script>
-  (function(){
-    if(!window.chatbase || window.chatbase("getState") !== "initialized"){
-      window.chatbase = (...args) => {
-        if(!window.chatbase.q){ window.chatbase.q = []; }
-        window.chatbase.q.push(args);
-      };
-      window.chatbase = new Proxy(window.chatbase, {
-        get(target, prop){
-          if(prop === "q"){ return target.q; }
-          return (...args) => target(prop, ...args);
-        }
-      });
-    }
-    const onLoad = function(){
-      const script = document.createElement("script");
-      script.src = "https://www.chatbase.co/embed.min.js";
-      script.id = "CT4-r9vET8KnSxWtNJH36";
-      script.domain = "www.chatbase.co";
-      document.body.appendChild(script);
-    };
-    if(document.readyState === "complete"){
-      onLoad();
-    } else {
-      window.addEventListener("load", onLoad);
-    }
-  })();
-  </script></body>
+  </footer>
+
+
+
+  <!-- Embedded Chatbot -->
+  <iframe
+    class="chatbot-container"
+    src="https://cdn.botpress.cloud/webchat/v3.0/shareable.html?configUrl=https://files.bpcontent.cloud/2025/06/05/09/20250605092444-5LMA73HJ.json"
+    allow="microphone; autoplay"
+  ></iframe>
+</body>
 </html>
