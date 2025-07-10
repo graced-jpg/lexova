@@ -3,112 +3,157 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lexova Login</title>
+  <title>Lexova – Your Law School AI Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f7f9fb;
+      color: #333;
     }
-    .login-container {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
-    }
-    h2 {
+    header {
+      background: #003366 url('logo.png') no-repeat center center;
+      background-size: contain;
+      padding: 100px 20px;
       text-align: center;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
       color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
     }
-    button:hover {
-      background-color: #45a049;
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
     }
-    .toggle {
+    header p {
+      font-size: 1.25rem;
+    }
+    .cta {
+      background: #e0f0ff;
+      border-left: 5px solid #003366;
+      margin: 40px auto;
+      padding: 20px;
+      max-width: 600px;
       text-align: center;
-      margin-top: 10px;
-      color: blue;
-      cursor: pointer;
+      border-radius: 8px;
+      animation: pulse 2.5s infinite;
+    }
+    .cta h3 {
+      margin-top: 0;
+      color: #003366;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 51, 102, 0.5); }
+      70% { transform: scale(1.03); box-shadow: 0 0 10px 10px rgba(0, 51, 102, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 51, 102, 0); }
+    }
+    .section {
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      width: 260px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #003366;
+    }
+    .testimonial {
+      font-style: italic;
+      margin-top: 40px;
+      color: #555;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      background: #003366;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .cards { flex-direction: column; align-items: center; }
+    }
+
+    /* Chatbot Styles */
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2 id="form-title">Lexova Login</h2>
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button onclick="handleAuth()" id="action-btn">Login</button>
-    <div class="toggle" onclick="toggleForm()">Don't have an account? Sign up</div>
+  <header>
+    <h1>Lexova</h1>
+    <p>Your Law School AI Companion</p>
+  </header>
+
+  <div class="cta">
+    <h3>Need Help Studying?</h3>
+    <p> Ask Lexova!</p>
   </div>
 
-  <!-- Firebase SDK (Module Style) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+  <section class="section">
+    <h2>Why Use Lexova?</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Case Summaries</h3>
+        <p>Quick and easy access to Nigerian law cases for students.</p>
+      </div>
+      <div class="card">
+        <h3>24/7 Chatbot</h3>
+        <p>Ask your legal questions anytime, anywhere.</p>
+      </div>
+      <div class="card">
+        <h3>Study Assistant</h3>
+        <p>Get summaries, definitions, and help understanding concepts.</p>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p>“Lexova helped me study for my law exams — it's like having a tutor in my pocket!”<br>— Grace, 300L, UNILORIN</p>
+    </div>
+  </section>
 
-    // Your Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyAZ7ea2Z6YAuCrllozqWQrqG26suMd0xH0",
-      authDomain: "lexova-ef919.firebaseapp.com",
-      projectId: "lexova-ef919",
-      storageBucket: "lexova-ef919.firebasestorage.app",
-      messagingSenderId: "1080937785922",
-      appId: "1:1080937785922:web:63fb9e84dc085680915bdb",
-      measurementId: "G-07MZKYN01B"
-    };
+  <footer>
+    &copy; 2025 Lexova. All rights reserved.
+  </footer>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const analytics = getAnalytics(app);
-
-    let isLogin = true;
-
-    window.toggleForm = () => {
-      isLogin = !isLogin;
-      document.getElementById("form-title").innerText = isLogin ? "Lexova Login" : "Lexova Sign Up";
-      document.getElementById("action-btn").innerText = isLogin ? "Login" : "Sign Up";
-      document.querySelector(".toggle").innerText = isLogin ? "Don't have an account? Sign up" : "Already have an account? Login";
-    };
-
-    window.handleAuth = () => {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      if (isLogin) {
-        signInWithEmailAndPassword(auth, email, password)
-          .then(() => {
-            alert("Login successful!");
-            // Redirect or show Lexova bot here
-          })
-          .catch((error) => alert(error.message));
-      } else {
-        createUserWithEmailAndPassword(auth, email, password)
-          .then(() => {
-            alert("Sign up successful!");
-            // Initialize user credit or redirect
-          })
-          .catch((error) => alert(error.message));
-      }
-    };
+  <!-- Welcome Message on Load 
+  <script>
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        alert('👋 Hi! I’m Lexova, your law study assistant. Click the chat icon in the bottom-right corner to start chatting!');-->
+      }, 1000);
+    });
   </script>
+
+  <!-- Embedded Chatbot -->
+  <iframe
+    class="chatbot-container"
+    src="https://cdn.botpress.cloud/webchat/v3.0/shareable.html?configUrl=https://files.bpcontent.cloud/2025/06/05/09/20250605092444-5LMA73HJ.json"
+    allow="microphone; autoplay"
+  ></iframe>
 </body>
 </html>
