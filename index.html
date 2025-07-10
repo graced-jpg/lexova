@@ -1,44 +1,72 @@
+<!DOCTYPE html><html lang="en">
 <head>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAZ7ea2Z6YAuCrllozqWQrqG26suMd0xH0",
-    authDomain: "lexova-ef919.firebaseapp.com",
-    projectId: "lexova-ef919",
-    storageBucket: "lexova-ef919.firebasestorage.app",
-    messagingSenderId: "1080937785922",
-    appId: "1:1080937785922:web:63fb9e84dc085680915bdb",
-    measurementId: "G-07MZKYN01B"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // 🔐 Auth check
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "/login.html";
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lexova Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      padding: 20px;
     }
-  });
+    #logout-btn {
+      background-color: #d9534f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+    }
+    #logout-btn:hover {
+      background-color: #c9302c;
+    }
+  </style>
+</head>
+<body><button id="logout-btn">Logout</button>
 
-  // 🚪 Logout handler (wait for DOM to be ready)
-  window.addEventListener("DOMContentLoaded", () => {
-    const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", () => {
-        signOut(auth)
-          .then(() => {
-            window.location.href = "/login.html";
-          })
-          .catch((error) => {
+  <!-- Chatbot Interface Placeholder -->  <h1>Welcome to Lexova 👩‍⚖️</h1>
+  <p>The AI-powered legal assistant is here to help you with Nigerian law.</p>  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAZ7ea2Z6YAuCrllozqWQrqG26suMd0xH0",
+      authDomain: "lexova-ef919.firebaseapp.com",
+      projectId: "lexova-ef919",
+      storageBucket: "lexova-ef919.firebasestorage.app",
+      messagingSenderId: "1080937785922",
+      appId: "1:1080937785922:web:63fb9e84dc085680915bdb",
+      measurementId: "G-07MZKYN01B"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // 🔐 Auth protection
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "/lexova/login.html";
+      }
+    });
+
+    // 🚪 Logout button
+    window.addEventListener("DOMContentLoaded", () => {
+      const logoutBtn = document.getElementById("logout-btn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          signOut(auth).then(() => {
+            window.location.href = "/lexova/login.html";
+          }).catch((error) => {
             alert("Logout failed: " + error.message);
           });
-      });
-    }
-  });
-</script>
+        });
+      }
+    });
+  </script></body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
