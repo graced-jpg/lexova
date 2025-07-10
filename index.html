@@ -1,3 +1,21 @@
+<head>
+  ...
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    const firebaseConfig = { /* your config */ };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "/login.html"; // redirect if not signed in
+      }
+    });
+  </script>
+</head>
+<
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,7 +125,22 @@
 <body>
   <header>
   </header>
+<body>
+  <!-- Your chatbot UI here -->
+  <button id="logout-btn">Logout</button>
 
+  <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    const auth = getAuth();
+
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "/login.html"; // return to login after logout
+      });
+    });
+  </script>
+</body>
   <div class="cta">
     <h3>Need Help Studying?</h3>
     <p> Ask Lexova!</p>
@@ -143,7 +176,6 @@
     window.addEventListener('load', function () {
       setTimeout(function () {
         alert('👋 Hi! I’m Lexova, your law study assistant. Click the chat icon in the bottom-right corner to start chatting!');-->
-      }, 1000);
     });
   </script>
 
