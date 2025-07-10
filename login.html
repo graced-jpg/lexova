@@ -91,15 +91,15 @@
       if (isLogin) {
         signInWithEmailAndPassword(auth, email, password)
           .then(() => {
-            window.location.href = "https://graced-jpg.github.io/lexova/";
+            window.location.href = "/lexova/";
           })
-          .catch((error) => alert(error.message));
+          .catch((error) => alert("Login failed: " + error.message));
       } else {
         createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
-            window.location.href = "https://graced-jpg.github.io/lexova/";
+            window.location.href = "/lexova/";
           })
-          .catch((error) => alert(error.message));
+          .catch((error) => alert("Signup failed: " + error.message));
       }
     };
   </script></body>
