@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lexova Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .toggle {
+      text-align: center;
+      margin-top: 10px;
+      color: blue;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2 id="form-title">Lexova Login</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="handleAuth()" id="action-btn">Login</button>
+    <div class="toggle" onclick="toggleForm()">Don't have an account? Sign up</div>
+  </div>  <!-- Firebase SDK (Module Style) -->  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAZ7ea2Z6YAuCrllozqWQrqG26suMd0xH0",
+      authDomain: "lexova-ef919.firebaseapp.com",
+      projectId: "lexova-ef919",
+      storageBucket: "lexova-ef919.firebasestorage.app",
+      messagingSenderId: "1080937785922",
+      appId: "1:1080937785922:web:63fb9e84dc085680915bdb",
+      measurementId: "G-07MZKYN01B"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const analytics = getAnalytics(app);
+
+    let isLogin = true;
+
+    window.toggleForm = () => {
+      isLogin = !isLogin;
+      document.getElementById("form-title").innerText = isLogin ? "Lexova Login" : "Lexova Sign Up";
+      document.getElementById("action-btn").innerText = isLogin ? "Login" : "Sign Up";
+      document.querySelector(".toggle").innerText = isLogin ? "Don't have an account? Sign up" : "Already have an account? Login";
+    };
+
+    window.handleAuth = () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (isLogin) {
+        signInWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            window.location.href = "https://graced-jpg.github.io/lexova/";
+          })
+          .catch((error) => alert(error.message));
+      } else {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            window.location.href = "https://graced-jpg.github.io/lexova/";
+          })
+          .catch((error) => alert(error.message));
+      }
+    };
+  </script></body>
+</html>
