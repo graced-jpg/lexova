@@ -3,60 +3,136 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lexova Login</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f7f9fc, #ffffff);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-    }
-    .login-container {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
-    }
-    h2 {
-      text-align: center;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .toggle {
-      text-align: center;
-      margin-top: 10px;
-      color: blue;
-      cursor: pointer;
-    }
+      margin: 0;
+    }.login-container {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 320px;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  top: -60px;
+  left: 20px;
+  width: 50px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-field {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.form-field input:focus {
+  border-color: #407BFF;
+}
+
+.form-field label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background: #fff;
+  padding: 0 5px;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-field .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
+.login-btn {
+  background-color: #407BFF;
+  color: #fff;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #2f67e2;
+}
+
+.toggle-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+.toggle-link span {
+  font-weight: 600;
+  color: #407BFF;
+  cursor: pointer;
+}
+
   </style>
 </head>
 <body>
   <div class="login-container">
-    <h2 id="form-title">Lexova Login</h2>
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button onclick="handleAuth()" id="action-btn">Login</button>
-    <div class="toggle" onclick="toggleForm()">Don't have an account? Sign up</div>
-  </div>  <!-- Firebase SDK (Module Style) -->  <script type="module">
+    <img src="https://graced-jpg.github.io/lexova/logo.png" alt="Lexova Logo" class="logo">
+    <div class="login-header">
+      <h2 id="form-title">Sign In to Lexova</h2>
+    </div><div class="form-field">
+  <label for="email">Email</label>
+  <input type="email" id="email" placeholder="Enter your email" required />
+</div>
+
+<div class="form-field">
+  <label for="password">Password</label>
+  <input type="password" id="password" placeholder="Enter your password" required />
+  <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
+</div>
+
+<button class="login-btn" onclick="handleAuth()" id="action-btn">Sign In</button>
+
+<div class="toggle-link">
+  <span onclick="toggleForm()">Don't have an account? Sign Up</span>
+</div>
+
+  </div>  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
@@ -79,27 +155,52 @@
 
     window.toggleForm = () => {
       isLogin = !isLogin;
-      document.getElementById("form-title").innerText = isLogin ? "Lexova Login" : "Lexova Sign Up";
-      document.getElementById("action-btn").innerText = isLogin ? "Login" : "Sign Up";
-      document.querySelector(".toggle").innerText = isLogin ? "Don't have an account? Sign up" : "Already have an account? Login";
+      document.getElementById("form-title").innerText = isLogin ? "Sign In to Lexova" : "Create Your Lexova Account";
+      document.getElementById("action-btn").innerText = isLogin ? "Sign In" : "Sign Up";
+      document.querySelector(".toggle-link span").innerText = isLogin ? "Don't have an account? Sign Up" : "Already have an account? Sign In";
     };
 
     window.handleAuth = () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
+      const btn = document.getElementById("action-btn");
+      const originalText = btn.innerText;
+      btn.innerText = isLogin ? "Signing In..." : "Creating Account...";
+      btn.disabled = true;
+
       if (isLogin) {
         signInWithEmailAndPassword(auth, email, password)
           .then(() => {
             window.location.href = "/lexova/";
           })
-          .catch((error) => alert("Login failed: " + error.message));
+          .catch((error) => {
+            alert("Login failed: " + error.message);
+            btn.innerText = originalText;
+            btn.disabled = false;
+          });
       } else {
         createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
             window.location.href = "/lexova/";
           })
-          .catch((error) => alert("Signup failed: " + error.message));
+          .catch((error) => {
+            alert("Signup failed: " + error.message);
+            btn.innerText = originalText;
+            btn.disabled = false;
+          });
+      }
+    };
+
+    window.togglePassword = () => {
+      const passwordInput = document.getElementById("password");
+      const icon = document.querySelector(".toggle-password");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+      } else {
+        passwordInput.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
       }
     };
   </script></body>

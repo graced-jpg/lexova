@@ -3,32 +3,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lexova Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      padding: 20px;
-    }
-    #logout-btn {
-      background-color: #d9534f;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-    }
-    #logout-btn:hover {
-      background-color: #c9302c;
-    }
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f7f9fc, #ffffff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }header {
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+header img {
+  height: 40px;
+}
+
+#logout-btn {
+  background-color: #407BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+#logout-btn:hover {
+  background-color: #2f67e2;
+}
+
+.chatbot-wrapper {
+  margin-top: 2rem;
+  width: 95%;
+  max-width: 900px;
+  height: 85vh;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
   </style>
 </head>
-<body><button id="logout-btn">Logout</button>
-
-  <!-- Chatbot Interface Placeholder -->  <h1>Welcome to Lexova 👩‍⚖️</h1>
-  <p>The AI-powered legal assistant is here to help you with Nigerian law.</p>  <script type="module">
+<body>
+  <header>
+    <img src="https://graced-jpg.github.io/lexova/logo.png" alt="Lexova Logo" />
+    <button id="logout-btn">Logout</button>
+  </header>  <div class="chatbot-wrapper">
+    <iframe
+      src="https://cdn.botpress.cloud/webchat/v3.0/shareable.html?configUrl=https://files.bpcontent.cloud/2025/06/05/09/20250605092444-5LMA73HJ.json"
+      allow="microphone; autoplay">
+    </iframe>
+  </div>  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
@@ -45,196 +88,25 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // 🔐 Auth protection
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "/lexova/login.html";
-      }
-    });
-
-    // 🚪 Logout button
     window.addEventListener("DOMContentLoaded", () => {
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          window.location.href = "/lexova/login.html";
+        }
+      });
+
       const logoutBtn = document.getElementById("logout-btn");
       if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-          signOut(auth).then(() => {
-            window.location.href = "/lexova/login.html";
-          }).catch((error) => {
-            alert("Logout failed: " + error.message);
-          });
+          signOut(auth)
+            .then(() => {
+              window.location.href = "/lexova/login.html";
+            })
+            .catch((error) => {
+              alert("Logout failed: " + error.message);
+            });
         });
       }
     });
   </script></body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lexova – Your Law School AI Companion</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #f7f9fb;
-      color: #333;
-    }
-    header {
-      background: #003366 url('logo.png') no-repeat center center;
-      background-size: contain;
-      padding: 100px 20px;
-      text-align: center;
-      color: white;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
-    header p {
-      font-size: 1.25rem;
-    }
-    .cta {
-      background: #e0f0ff;
-      border-left: 5px solid #003366;
-      margin: 40px auto;
-      padding: 20px;
-      max-width: 600px;
-      text-align: center;
-      border-radius: 8px;
-      animation: pulse 2.5s infinite;
-    }
-    .cta h3 {
-      margin-top: 0;
-      color: #003366;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 51, 102, 0.5); }
-      70% { transform: scale(1.03); box-shadow: 0 0 10px 10px rgba(0, 51, 102, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 51, 102, 0); }
-    }
-    .section {
-      padding: 60px 20px;
-      max-width: 1000px;
-      margin: auto;
-      text-align: center;
-    }
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      width: 260px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .card h3 {
-      margin-top: 0;
-      color: #003366;
-    }
-    .testimonial {
-      font-style: italic;
-      margin-top: 40px;
-      color: #555;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      background: #003366;
-      color: white;
-    }
-    @media (max-width: 768px) {
-      header h1 { font-size: 2rem; }
-      .cards { flex-direction: column; align-items: center; }
-    }
-
-    /* Chatbot Styles */
-    .chatbot-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 350px;
-      height: 500px;
-      border: none;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      z-index: 9999;
-    }
-  </style>
-</head>
-<body>
-  <header>
-  </header>
-<body>
-  <!-- Your chatbot UI here -->
-  <button id="logout-btn">Logout</button>
-
-  <script type="module">
-    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-    const auth = getAuth();
-
-    document.getElementById("logout-btn").addEventListener("click", () => {
-      signOut(auth).then(() => {
-        window.location.href = "/login.html"; // return to login after logout
-      });
-    });
-  </script>
-</body>
-  <div class="cta">
-    <h3>Need Help Studying?</h3>
-    <p> Ask Lexova!</p>
-  </div>
-
-  <section class="section">
-    <h2>Why Use Lexova?</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Case Summaries</h3>
-        <p>Quick and easy access to Nigerian law cases for students.</p>
-      </div>
-      <div class="card">
-        <h3>24/7 Chatbot</h3>
-        <p>Ask your legal questions anytime, anywhere.</p>
-      </div>
-      <div class="card">
-        <h3>Study Assistant</h3>
-        <p>Get summaries, definitions, and help understanding concepts.</p>
-      </div>
-    </div>
-    <div class="testimonial">
-      <p>“Lexova helped me study for my law exams — it's like having a tutor in my pocket!”<br>— Grace, 300L, UNILORIN</p>
-    </div>
-  </section>
-
-  <footer>
-    &copy; 2025 Lexova. All rights reserved.
-  </footer>
-
-  <!-- Welcome Message on Load 
-  <script>
-    window.addEventListener('load', function () {
-      setTimeout(function () {
-        alert('👋 Hi! I’m Lexova, your law study assistant. Click the chat icon in the bottom-right corner to start chatting!');-->
-    });
-  </script>
-
-  <!-- Embedded Chatbot -->
-  <iframe
-    class="chatbot-container"
-    src="https://cdn.botpress.cloud/webchat/v3.0/shareable.html?configUrl=https://files.bpcontent.cloud/2025/06/05/09/20250605092444-5LMA73HJ.json"
-    allow="microphone; autoplay"
-  ></iframe>
-</body>
 </html>
