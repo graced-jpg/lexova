@@ -42,7 +42,30 @@ header img {
 #logout-btn:hover {
   background-color: #2f67e2;
 }
+.spinner {
+  border: 3px solid #fff;
+  border-top: 3px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  display: none;
+  margin-left: 10px;
+  vertical-align: middle;
+}
 
+#logout-btn.loading .spinner {
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#logout-btn.retry {
+  background-color: #e74c3c; /* red */
+  color: white;
+}
 .chatbot-wrapper {
   margin-top: 2rem;
   width: 95%;
@@ -65,7 +88,10 @@ iframe {
 <body>
   <header>
     <img src="https://graced-jpg.github.io/lexova/logo.png" alt="Lexova Logo" />
-    <button id="logout-btn">Logout</button>
+    <button id="logout-btn">
+  Logout
+  <span class="spinner"></span>
+</button>
   </header>  <div class="chatbot-wrapper">
     <iframe
       src="https://cdn.botpress.cloud/webchat/v3.0/shareable.html?configUrl=https://files.bpcontent.cloud/2025/06/05/09/20250605092444-5LMA73HJ.json"
@@ -97,16 +123,24 @@ iframe {
 
       const logoutBtn = document.getElementById("logout-btn");
       if (logoutBtn) {
-        logoutBtn.addEventListener("click", () => {
-          signOut(auth)
-            .then(() => {
-              window.location.href = "/lexova/login.html";
-            })
-            .catch((error) => {
-              alert("Logout failed: " + error.message);
-            });
-        });
-      }
+  logoutBtn.addEventListener("click", () => {
+    logoutBtn.classList.add("loading");
+    signOut(auth)
+      .then(() => {
+        window.location.href = "/lexova/login.html";
+      })
+      .catch((error) => {
+        alert("Logout failed: " + error.message);
+        logoutBtn.classList.remove("loading");
+        logoutBtn.classList.add("retry");
+
+        // Reset button after 3 seconds
+        setTimeout(() => {
+          logoutBtn.classList.remove("retry");
+        }, 3000);
+      });
+  });
+}
     });
   </script></body>
 </html>
