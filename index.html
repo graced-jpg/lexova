@@ -147,7 +147,7 @@ iframe {
 // --- Lexova Credit System ---
 const FREE_TRIAL_LIMIT = 5;
 
-// Initialize user credits on first visit
+// Set initial credits
 if (localStorage.getItem("lexova_credits") === null) {
   localStorage.setItem("lexova_credits", FREE_TRIAL_LIMIT);
 }
@@ -160,33 +160,76 @@ function updateCredits(newCredits) {
   localStorage.setItem("lexova_credits", newCredits);
 }
 
+// Credit usage
 function useCredit() {
   let credits = getCredits();
   if (credits > 0) {
     updateCredits(credits - 1);
-    return true;
+    if (credits - 1 === 0) {
+      showPaywall();
+    }
   } else {
-    return false;
+    showPaywall();
   }
 }
 
-const chatbotFrame = document.querySelector("iframe");
+// Add Paywall Overlay
+function showPaywall() {
+  const overlay = document.createElement("div");
+  overlay.id = "paywall-overlay";
+  overlay.innerHTML = `
+    <div class="paywall-content">
+      <h2>You're out of free credits</h2>
+      <p>Please buy more credits to continue chatting.</p>
+      <button onclick="location.reload()">Reload</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
 
-window.addEventListener("message", function(event) {
-  if (event.data && event.data.payload && event.data.type === "bp:sendPayload") {
-    const payloadType = event.data.payload.type;
-
-    if (payloadType === "text") {
-      if (!useCredit()) {
-        alert("You’ve used all your free credits. Please buy more to continue.");
-        // Block message from being sent by returning early
-        return;
-      }
-    }
-
-    // If enough credits, forward message to Botpress iframe
-    chatbotFrame.contentWindow.postMessage(event.data, "*");
+// Add CSS for Paywall
+const paywallStyle = document.createElement("style");
+paywallStyle.innerHTML = `
+  #paywall-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(255,255,255,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    flex-direction: column;
   }
+  .paywall-content {
+    text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+  .paywall-content button {
+    margin-top: 1rem;
+    padding: 10px 20px;
+    background-color: #407BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+`;
+document.head.appendChild(paywallStyle);
+
+// Hook to credit deduction
+// On every user click inside iframe, assume it's a question
+const chatbotFrame = document.querySelector("iframe");
+chatbotFrame.addEventListener("load", () => {
+  const iframeDoc = chatbotFrame.contentWindow;
+  chatbotFrame.contentWindow.document.addEventListener("click", () => {
+    if (getCredits() > 0) {
+      useCredit();
+    }
+  });
 });
 </script></body>
 </html>
